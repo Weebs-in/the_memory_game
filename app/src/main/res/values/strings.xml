@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TheMemoryGame</string>
+    <string name="url_input_prompt">Input a url to fetch images</string>
+</resources>
