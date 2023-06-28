@@ -20,11 +20,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/fetchButton"
+        android:id="@+id/fetch_page_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Fetch Images"
         android:onClick="openFetchActivity" />
+
+    <Button
+        android:id="@+id/guess_page_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guess Images"
+        android:onClick="openGuessActivity" />
 
 
 </LinearLayout>
