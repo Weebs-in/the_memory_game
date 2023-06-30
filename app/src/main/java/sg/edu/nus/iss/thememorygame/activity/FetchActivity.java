@@ -2,6 +2,8 @@ package sg.edu.nus.iss.thememorygame.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -74,6 +77,8 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
             imageView.setImageResource(R.drawable.img_clear);
             // clear progress bar
             progressBar.setProgress(0);
+            Drawable progressDrawable = progressBar.getProgressDrawable();
+            progressDrawable.setColorFilter(null);
             // update text progress
             String textProgress = "Downloading ? of 20 images";
             progressText.setText(textProgress);
@@ -173,6 +178,11 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
             // update progress bar
             int progressPercentage = (int) ((currentProgress / (float) imageMaxCount) * 100);
             progressBar.setProgress(progressPercentage);
+            if (currentProgress == imageMaxCount) {
+                Drawable progressDrawable = progressBar.getProgressDrawable();
+                int color = ContextCompat.getColor(FetchActivity.this, R.color.completeGreen);
+                progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            }
             // update text progress
             String textProgress = currentProgress != imageMaxCount ? ("Downloading " + currentProgress + " of " + imageMaxCount + " images") : "Download completed";
             progressText.setText(textProgress);
