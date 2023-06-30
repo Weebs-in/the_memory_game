@@ -26,4 +26,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, GuessActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+    }
 }

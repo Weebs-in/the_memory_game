@@ -21,8 +21,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="20sp"
-            android:text="X of 6 matches" />
+            android:text="X of 6 matches"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/timer"
@@ -30,8 +30,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="20sp"
-            android:text="00:03:45" />
+            android:text="00:03:45"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -39,8 +39,8 @@
         android:id="@+id/image_table"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
-        android:layout_marginBottom="30dp">
+        android:layout_marginBottom="30dp"
+        android:layout_weight="10">
 
         <TableRow
             android:layout_width="match_parent"
@@ -48,28 +48,28 @@
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/image1_1"
+                android:id="@+id/image_guess_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img" />
+                android:src="@drawable/img_clear" />
 
             <ImageView
-                android:id="@+id/image1_2"
+                android:id="@+id/image_guess_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img" />
+                android:src="@drawable/img_clear" />
 
             <ImageView
-                android:id="@+id/image1_3"
+                android:id="@+id/image_guess_3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img" />
+                android:src="@drawable/img_clear" />
 
         </TableRow>
 
@@ -79,28 +79,28 @@
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/image2_1"
+                android:id="@+id/image_guess_4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img" />
+                android:src="@drawable/img_clear" />
 
             <ImageView
-                android:id="@+id/image2_2"
+                android:id="@+id/image_guess_5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img" />
+                android:src="@drawable/img_clear" />
 
             <ImageView
-                android:id="@+id/image2_3"
+                android:id="@+id/image_guess_6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img" />
+                android:src="@drawable/img_clear" />
 
         </TableRow>
 
@@ -110,28 +110,28 @@
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/image3_1"
+                android:id="@+id/image_guess_7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img" />
+                android:src="@drawable/img_clear" />
 
             <ImageView
-                android:id="@+id/image3_2"
+                android:id="@+id/image_guess_8"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img" />
+                android:src="@drawable/img_clear" />
 
             <ImageView
-                android:id="@+id/image3_3"
+                android:id="@+id/image_guess_9"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img" />
+                android:src="@drawable/img_clear" />
 
         </TableRow>
 
@@ -141,31 +141,29 @@
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/image4_1"
+                android:id="@+id/image_guess_10"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img" />
+                android:src="@drawable/img_clear" />
 
             <ImageView
-                android:id="@+id/image4_2"
+                android:id="@+id/image_guess_11"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img" />
+                android:src="@drawable/img_clear" />
 
             <ImageView
-                android:id="@+id/image4_3"
+                android:id="@+id/image_guess_12"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img" />
+                android:src="@drawable/img_clear" />
 
         </TableRow>
     </TableLayout>
-
-
 </LinearLayout>
