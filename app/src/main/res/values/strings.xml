@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">TheMemoryGame</string>
     <string name="url_input_prompt">Input a url to fetch images</string>
+    <string name="fetch_btn_text">Fetch</string>
+    <string name="ur_input_hint">Enter URL here</string>
+    <string name="download_progress_text_default">Downloading ? of 20 images</string>
 </resources>
