@@ -52,7 +52,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
 
             <ImageView
                 android:id="@+id/image2"
@@ -60,7 +60,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
 
             <ImageView
                 android:id="@+id/image3"
@@ -68,7 +68,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
 
             <ImageView
                 android:id="@+id/image4"
@@ -76,7 +76,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
         </TableRow>
 
         <TableRow
@@ -90,7 +90,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
 
             <ImageView
                 android:id="@+id/image6"
@@ -98,7 +98,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img" />
+                android:src="@drawable/img_clear" />
 
             <ImageView
                 android:id="@+id/image7"
@@ -106,7 +106,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
 
             <ImageView
                 android:id="@+id/image8"
@@ -114,7 +114,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
         </TableRow>
 
         <TableRow
@@ -128,7 +128,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
 
             <ImageView
                 android:id="@+id/image10"
@@ -136,7 +136,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
 
             <ImageView
                 android:id="@+id/image11"
@@ -144,7 +144,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
 
             <ImageView
                 android:id="@+id/image12"
@@ -152,7 +152,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
         </TableRow>
 
         <TableRow
@@ -166,7 +166,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
 
             <ImageView
                 android:id="@+id/image14"
@@ -174,7 +174,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
 
             <ImageView
                 android:id="@+id/image15"
@@ -182,7 +182,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
 
             <ImageView
                 android:id="@+id/image16"
@@ -190,7 +190,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
         </TableRow>
 
         <TableRow
@@ -204,7 +204,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
 
             <ImageView
                 android:id="@+id/image18"
@@ -212,7 +212,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
 
             <ImageView
                 android:id="@+id/image19"
@@ -220,7 +220,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
 
             <ImageView
                 android:id="@+id/image20"
@@ -228,7 +228,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_img"/>
+                android:src="@drawable/img_clear"/>
         </TableRow>
 
     </TableLayout>
