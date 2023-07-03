@@ -41,7 +41,7 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
     public Button buttonSubmit;
     public ProgressBar progressBar;
     public TextView progressText;
-    private static LruCache<String, Bitmap> imageCache;
+    public static LruCache<String, Bitmap> imageCache;
     private static final int imageMaxCount = 20;
     private FetchImagesTask fetchImagesTask;
     private Map<Integer, Boolean> imageSelected;
@@ -85,6 +85,7 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
                     } else if (selectedCount == maxSelectionCount) {
                         Intent intent = new Intent(FetchActivity.this, GuessActivity.class);
                         intent.putIntegerArrayListExtra("selectedIds", (ArrayList<Integer>) getSelectedImageIds());
+                        intent.putIntegerArrayListExtra("unselectedIds", (ArrayList<Integer>) getUnSelectedImageIds());
                         startActivity(intent);
                     }
                 }
@@ -145,7 +146,15 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
         }
         return res;
     }
-
+    public List<Integer> getUnSelectedImageIds() {
+        List<Integer> res = new ArrayList<>();
+        for (int k : imageSelected.keySet()) {
+            if (Boolean.FALSE.equals(imageSelected.get(k))) {
+                res.add(k);
+            }
+        }
+        return res;
+    }
     /**
      * Make toast easier
      *
