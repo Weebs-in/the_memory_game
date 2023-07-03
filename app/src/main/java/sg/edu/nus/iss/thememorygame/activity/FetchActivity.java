@@ -333,7 +333,7 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
         }
 
     }
-
+    //****
     private void startNextActivity() {
         Intent intent = new Intent(FetchActivity.this, GuessActivity.class);
         startActivity(intent);
