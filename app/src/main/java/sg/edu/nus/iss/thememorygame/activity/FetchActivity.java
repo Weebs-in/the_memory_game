@@ -47,6 +47,9 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
     private Map<Integer, Boolean> imageSelected;
     private final int maxSelectionCount = 6;
 
+    private TextView textViewStatus;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +100,7 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
         // set progress bar and text
         progressBar = findViewById(R.id.progressBar);
         progressText = findViewById(R.id.progress_text);
+        textViewStatus = findViewById(R.id.textViewStatus);
         // set lru cache
         int maxMemory = (int) Runtime.getRuntime().maxMemory() / 1024;
         int cacheSize = maxMemory / 8;
@@ -304,7 +308,39 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
             String textProgress = currentProgress != imageMaxCount ? ("Downloading " + currentProgress + " of " + imageMaxCount + " images") : "Download completed";
             progressText.setText(textProgress);
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            // Hide the progress bar and text
+            progressBar.setVisibility(View.GONE);
+            progressText.setVisibility(View.GONE);
+
+            // Check if all images are loaded
+            if (getImageCacheCount() == imageMaxCount) {
+                makeToastWithMsg("All images loaded successfully");
+            } else {
+                makeToastWithMsg("Failed to load all images");
+            }
+
+            // Perform any additional post-processing or UI updates here
+            // For example, enable a button or update a TextView
+            buttonSubmit.setEnabled(true);
+            textViewStatus.setText("Image loading completed");
+
+            // Start a new activity or do any other necessary actions
+            startNextActivity();
+
+        }
+
     }
+
+    private void startNextActivity() {
+        Intent intent = new Intent(FetchActivity.this, GuessActivity.class);
+        startActivity(intent);
+    }
+
+
+
 
     @Override
     public void onBackPressed() {
