@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import sg.edu.nus.iss.thememorygame.activity.FetchActivity;
 import sg.edu.nus.iss.thememorygame.activity.GuessActivity;
@@ -15,6 +16,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ImageView imageView = findViewById(R.id.imgBrain);
+        if(imageView!=null){
+            imageView.setImageResource(R.drawable.brain);
+        }
     }
 
     public void openFetchActivity(View view) {
