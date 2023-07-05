@@ -4,4 +4,10 @@
     <string name="fetch_btn_text">Fetch</string>
     <string name="ur_input_hint">Enter URL here</string>
     <string name="download_progress_text_default">Downloading ? of 20 images</string>
+    <string name="instructions">Instructions</string>
+    <string name="popup_title">How to Play？</string>
+    <string name="long_text">\n1.Fetch Images\n\t\t\tFetch and display the first 20 images from a specified webpage, then select 6 images.\n2.Guess Images\n\t\t\tUsing the selected images, the user interacts with the memory game by tapping on placeholders to uncover pairs of images and tries to match them.\n3.Bouns Game\n\t\t\tFirst, perform the same operations as in step 1 to fetch images. Then, 6 selected images will be mixed among 12 images, and the user needs to find them.</string>
+
+
+
 </resources>
