@@ -41,7 +41,7 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
     public Button buttonSubmit;
     public ProgressBar progressBar;
     public TextView progressText;
-    public static LruCache<String, Bitmap> imageCache;
+    private static LruCache<String, Bitmap> imageCache;
     private static final int imageMaxCount = 20;
     private FetchImagesTask fetchImagesTask;
     private Map<Integer, Boolean> imageSelected;

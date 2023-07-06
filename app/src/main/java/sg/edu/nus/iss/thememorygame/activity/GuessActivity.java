@@ -1,26 +1,31 @@
 package sg.edu.nus.iss.thememorygame.activity;
 
-import static sg.edu.nus.iss.thememorygame.activity.FetchActivity.imageCache;
+import static sg.edu.nus.iss.thememorygame.activity.FetchActivity.getImageCache;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicReference;
 
 import sg.edu.nus.iss.thememorygame.MainActivity;
 import sg.edu.nus.iss.thememorygame.R;
@@ -28,15 +33,20 @@ import sg.edu.nus.iss.thememorygame.R;
 public class GuessActivity extends AppCompatActivity {
     private final String testTag = "GUESS_TEST";
 
-    private boolean guessSuccessful = false;
 
+    private boolean guessSuccessful=false;
     private int numOfGuessRight=0;
-    private int numOfGuess=0;
 
-    private TextView textViewTimer;
-    private CountDownTimer countDownTimer;
-    private Map<Integer, Boolean> imageSelected ;
-    private final int maxSelectionCount = 6;
+    private  boolean FirstPictureTurnOn = false;
+    private  boolean SecondPictureTurnOn = false;
+    private String firstImage = null;
+    private  String secondImage = null;
+    private int firstImageGuessPlace=-1;
+
+    private int mSeconds=0;
+
+    private static int testTime=0;
+
     /**
      * Make toast easier
      *
@@ -51,87 +61,162 @@ public class GuessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guess);
         List<Integer> receivedList = getIntent().getIntegerArrayListExtra("selectedIds");
-        List<Integer> unreceivedList = getIntent().getIntegerArrayListExtra("unselectedIds");
+
+
 
         if (receivedList == null) {
             Log.e(testTag, "You need to access this page via selecting items in the 1st page");
-            makeToastWithMsg("You need to access this page via selecting items in the 1st page");
+           // makeToastWithMsg("You need to access this page via selecting items in the 1st page");
             Intent intent = new Intent(GuessActivity.this, FetchActivity.class);
             startActivity(intent);
         } else {
-           /* for (Integer integer : receivedList) {
-                Log.d(testTag, "Selected image id: " + integer);
-            }*/
 
             TextView textView=findViewById(R.id.match_count);
             textView.setText(numOfGuessRight+" of 6 matches");
-            showImage(receivedList,unreceivedList);
+            showImage(receivedList);
 
 
-            startCountdownTimer();
+            runTimer();
 
         }
     }
 
-    private void showImage(List<Integer> receivedList,List<Integer> unreceivedList) {
-         imageSelected = new HashMap<>();
+    private void showImage(List<Integer> receivedList) {
 
-
+        Map<Integer,Integer> newPlace_imageNum=new HashMap<>();
         //all image number 1-12
         List<Integer> allNumbers = new ArrayList<>();
         for (int i = 1; i <= 12; i++) {
             allNumbers.add(i);
         }
-        //Randomly pick 6 out of 12 numbers
+        //Randomly pick 6 out of 12 numbers,takes 6 random place
         List<Integer> randomNumbers = generateRandomNumbers(1, 12, 6);
-        //the remain 6 numbers
+        //the remain 6 place
         List<Integer> remainingNumbers = new ArrayList<>(allNumbers);
         remainingNumbers.removeAll(randomNumbers);
 
-        Map<Integer,Integer> newPlace_imageNum=new HashMap<>();
+
         for(int i=0;i<6;i++){
             int imageId = receivedList.get(i);
 
             String cacheKey = "image" + imageId;
             // Fetching images from the cache
-            Bitmap bitmap = imageCache.get(cacheKey);
             // Displayed in the ImageView
             int imageGuessId = getResources().getIdentifier("image_guess_" + randomNumbers.get(i), "id", getPackageName());
             newPlace_imageNum.put(randomNumbers.get(i),imageId);
             ImageView imageView = findViewById(imageGuessId);
-            imageView.setImageBitmap(bitmap);
+            imageView.setImageResource(R.drawable.img_clear);
 
-            imageSelected.put(randomNumbers.get(i), false);
             int finalI=randomNumbers.get(i);
             imageView.setOnClickListener(view -> {
+                        imageView.setImageBitmap(getImageCache().get("image" + newPlace_imageNum.get(finalI)));
+                        if (FirstPictureTurnOn == false) {
+                            // 如果之前没有翻开的图片，则将当前点击的图片设置为第一张图片
+                            FirstPictureTurnOn =true;
+                            firstImageGuessPlace=imageView.getId();
+                            firstImage="image" + newPlace_imageNum.get(finalI);
+                            Log.d("first",firstImage);
+                        } else if (SecondPictureTurnOn == false) {
+                            // 如果已经有第一张图片翻开，但是还没有第二张图片翻开，则将当前点击的图片设置为第二张图片
+                            SecondPictureTurnOn = true;
+                            secondImage = "image" + newPlace_imageNum.get(finalI);
+                            Log.d("second",secondImage);
 
-                    boolean isSelected = Boolean.TRUE.equals(imageSelected.get(finalI));
-                    // if was selected, then reverse to the image
-                    if (isSelected) {
-                        imageView.setImageBitmap(imageCache.get("image" + newPlace_imageNum.get(finalI)));
-                        imageSelected.put(finalI, !isSelected);
-                        numOfGuessRight--;
-                        numOfGuess--;
-                        TextView textView = findViewById(R.id.match_count);
-                        textView.setText(numOfGuessRight + " of 6 matches");
-                        Log.d(testTag, "unselecting image" + newPlace_imageNum.get(finalI));
-                    } else {
-                        if (numOfGuess >= maxSelectionCount) {
-                            makeToastWithMsg("ERROR: Max number of item exceeded");
-                        }else {
-                        imageView.setImageResource(R.drawable.image_check);
-                        imageSelected.put(finalI, !isSelected);
+                            // 判断两张图片是否相同
+                            if (firstImage.equals(secondImage)) {
+                                // 如果两张图片相同，则保持翻开状态
+                                //将这两张图片设为不能再点击
+                                ImageView firstImageView=findViewById(firstImageGuessPlace);
+                                imageView.setEnabled(false);
+                                firstImageView.setEnabled(false);
+                                numOfGuessRight++;
+                                TextView textView = findViewById(R.id.match_count);
+                                textView.setText(numOfGuessRight + " of 6 matches");
+                                if(numOfGuessRight==6){
+                                    guessSuccessful=true;
+                                    timeRecording();
+                                    AlertDialog.Builder dlg = new AlertDialog.Builder(GuessActivity.this)
+                                            .setTitle("Congratulations")
+                                            .setMessage("You are successful!")
+                                            .setPositiveButton("Return",
+                                                    new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dlg, int which) {
+                                                            Intent intent = new Intent(GuessActivity.this, MainActivity.class);
+                                                            startActivity(intent);
+                                                            finish();
+                                                        }
+                                                    });
+                                    dlg.show();
+                                }
+                                FirstPictureTurnOn = false;
+                                SecondPictureTurnOn = false;
+                            } else {
+
+                                // 如果两张图片不同，则执行合上的操作
+                                //第一张图
+                                ImageView firstImageView=findViewById(firstImageGuessPlace);
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // 设置第二张图片为 R.drawable.img_clear
+                                        imageView.setImageResource(R.drawable.img_clear);
+                                        // 设置第一张图片为 R.drawable.img_clear
+                                        firstImageView.setImageResource(R.drawable.img_clear);
+                                    }
+                                }, 300); // 延迟0.3秒钟执行
+                                // 重置已翻开的图片变量，为下一次翻转做准备
+                                FirstPictureTurnOn = false;
+                                SecondPictureTurnOn = false;
+                                firstImageGuessPlace=-1;
+                            }
+                        }
+                        });
+                    }
+
+
+        // another 6 duplicated picture
+        for(int i=0;i<6;i++){
+            int imageId = receivedList.get(i);
+
+            String cacheKey = "image" + imageId;
+            int imageGuessId = getResources().getIdentifier("image_guess_" + remainingNumbers.get(i), "id", getPackageName());
+            newPlace_imageNum.put(remainingNumbers.get(i),imageId);
+            ImageView imageView = findViewById(imageGuessId);
+            imageView.setImageResource(R.drawable.img_clear);
+
+
+            int finalI=remainingNumbers.get(i);
+            imageView.setOnClickListener(view -> {
+                imageView.setImageBitmap(getImageCache().get("image" + newPlace_imageNum.get(finalI)));
+                if (FirstPictureTurnOn == false) {
+                    // 如果之前没有翻开的图片，则将当前点击的图片设置为第一张图片
+                    FirstPictureTurnOn =true;
+                    firstImageGuessPlace=imageView.getId();
+                    firstImage="image" + newPlace_imageNum.get(finalI);
+                    Log.d("first",firstImage);
+                } else if (SecondPictureTurnOn == false) {
+                    // 如果已经有第一张图片翻开，但是还没有第二张图片翻开，则将当前点击的图片设置为第二张图片
+                    SecondPictureTurnOn = true;
+                    secondImage = "image" + newPlace_imageNum.get(finalI);
+                    Log.d("second",secondImage);
+
+                    // 判断两张图片是否相同
+                    if (firstImage.equals(secondImage)) {
+                        // 如果两张图片相同，则保持翻开状态
+                        //将这两张图片设为不能再点击
+                        ImageView firstImageView=findViewById(firstImageGuessPlace);
+                        imageView.setEnabled(false);
+                        firstImageView.setEnabled(false);
                         numOfGuessRight++;
-                        numOfGuess++;
                         TextView textView = findViewById(R.id.match_count);
                         textView.setText(numOfGuessRight + " of 6 matches");
-
-                        Log.d(testTag, "selecting image" + newPlace_imageNum.get(finalI));
                         if(numOfGuessRight==6){
                             guessSuccessful=true;
-                            String title = getString(R.string.alert_right);
+                            timeRecording();
                             AlertDialog.Builder dlg = new AlertDialog.Builder(GuessActivity.this)
-                                    .setTitle(title)
+                                    .setTitle("Congratulations")
+                                    .setMessage("You are successful!")
                                     .setPositiveButton("Return",
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dlg, int which) {
@@ -142,57 +227,43 @@ public class GuessActivity extends AppCompatActivity {
                                             });
                             dlg.show();
                         }
-                        }
-                    }
-
-
-
-            });
-        }
-
-        //用于混淆的图片
-        for(int i=0;i<6;i++){
-            int imageId = unreceivedList.get(i);
-
-            String cacheKey = "image" + imageId;
-            Bitmap bitmap = imageCache.get(cacheKey);
-            int imageGuessId = getResources().getIdentifier("image_guess_" + remainingNumbers.get(i), "id", getPackageName());
-            newPlace_imageNum.put(remainingNumbers.get(i),imageId);
-            ImageView imageView = findViewById(imageGuessId);
-            imageView.setImageBitmap(bitmap);
-
-            imageSelected.put(remainingNumbers.get(i), false);
-            int finalI=remainingNumbers.get(i);
-            imageView.setOnClickListener(view -> {
-                    boolean isSelected = Boolean.TRUE.equals(imageSelected.get(finalI));
-                    // if was selected, then reverse to the image
-                    if (isSelected) {
-
-                        numOfGuess--;
-                        imageView.setImageBitmap(imageCache.get("image" + newPlace_imageNum.get(finalI)));
-                        imageSelected.put(finalI, !isSelected);
-                        Log.d(testTag, "unselecting image" + newPlace_imageNum.get(finalI));
+                        FirstPictureTurnOn = false;
+                        SecondPictureTurnOn = false;
                     } else {
-                        if (numOfGuess >= maxSelectionCount) {
-                            makeToastWithMsg("ERROR: Max number of item exceeded");
-                        } else {
-                            numOfGuess++;
-                            imageView.setImageResource(R.drawable.image_check);
-                            imageSelected.put(finalI, !isSelected);
-                            Log.d(testTag, "selecting image" + newPlace_imageNum.get(finalI));
-                        }
+
+                        // 如果两张图片不同，则执行合上的操作
+                        //第一张图
+                        ImageView firstImageView=findViewById(firstImageGuessPlace);
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // 设置第二张图片为 R.drawable.img_clear
+                                imageView.setImageResource(R.drawable.img_clear);
+                                // 设置第一张图片为 R.drawable.img_clear
+                                firstImageView.setImageResource(R.drawable.img_clear);
+                            }
+                        }, 300); // 延迟0.3秒钟执行
+                        // 重置已翻开的图片变量，为下一次翻转做准备
+                        FirstPictureTurnOn = false;
+                        SecondPictureTurnOn = false;
+                        firstImageGuessPlace=-1;
                     }
-
-
+                }
 
             });
         }
-
-
 
     }
 
 
+    public void timeRecording(){
+        SharedPreferences pref = getSharedPreferences("time_recording", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        testTime++;
+        editor.putString("Test Time"+testTime, String.valueOf(mSeconds));
+        editor.commit();
+    }
     public List<Integer> generateRandomNumbers(int min, int max, int count) {
         List<Integer> randomNumbers = new ArrayList<>();
         Random random = new Random();
@@ -213,101 +284,36 @@ public class GuessActivity extends AppCompatActivity {
         finish();
     }
 
+    public String formatSecondsToTime(int seconds) {
+        int hours = seconds / 3600;
+        int minutes = (seconds % 3600) / 60;
+        int remainingSeconds = seconds % 60;
 
-    private void startCountdownTimer() {
-
-        textViewTimer = findViewById(R.id.timer);
-
-        // Create a countdown timer with the total duration and interval
-        countDownTimer = new CountDownTimer(45000, 1000) {
+        return String.format("%02d:%02d:%02d", hours, minutes, remainingSeconds);
+    }
+    private void runTimer() {
+        final TextView txtTime = findViewById(R.id.timer);
+        final Handler handler = new Handler();
+        handler.post(new Runnable() {
             @Override
-            public void onTick(long millisUntilFinished) {
-                // Update the UI on each interval of the countdown
-                long seconds = millisUntilFinished / 1000;
-                textViewTimer.setText("Time remaining: " + seconds);
-            }
-
-            @Override
-            public void onFinish() {
-                // Perform actions when the countdown finishes
-                textViewTimer.setText("Time's up!");
-                if(guessSuccessful){
-
-                    String title = getString(R.string.alert_time_is_up);
-                    String msg = getString(R.string.alert_right);
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(GuessActivity.this)
-                            .setTitle(title)
-                            .setMessage(msg)
-                            .setPositiveButton("Return",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dlg, int which) {
-                                            Intent intent = new Intent(GuessActivity.this, MainActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    });
-                    dlg.show();
-                }else{
-                    String title = getString(R.string.alert_time_is_up);
-                    String msg = getString(R.string.alert_wrong);
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(GuessActivity.this)
-                            .setTitle(title)
-                            .setMessage(msg)
-                            .setPositiveButton("Return",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dlg, int which) {
-                                            Intent intent = new Intent(GuessActivity.this, MainActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    })
-                            .setNegativeButton("Try Again",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            Intent intent = getIntent();
-                                            finish();
-                                            startActivity(intent);
-                                        }
-                                    });
-                    dlg.show();
+            public void run() {
+                txtTime.setText(formatSecondsToTime(mSeconds));
+                    mSeconds++;
+                if (guessSuccessful) {
+                    handler.removeCallbacks(this); // 猜对了，停止计时器的执行
+                } else {
+                    handler.postDelayed(this, 1000); // 继续每秒执行一次
                 }
             }
-        };
-
-        // Start the countdown timer
-        countDownTimer.start();
+        });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Cancel the countdown timer when the activity is destroyed to prevent memory leaks
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
+
     }
-
-
-
-
-
-
-
 
 
 }
