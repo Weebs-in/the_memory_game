@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import sg.edu.nus.iss.thememorygame.activity.FetchActivity;
 import sg.edu.nus.iss.thememorygame.activity.GuessActivity;
+import sg.edu.nus.iss.thememorygame.activity.HistoryActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openGuessActivity(View view) {
         Intent intent = new Intent(this, GuessActivity.class);
+        startActivity(intent);
+    }
+
+    public void openHistoryActivity(View view){
+        Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 

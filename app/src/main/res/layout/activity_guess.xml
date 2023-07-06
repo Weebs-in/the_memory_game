@@ -166,4 +166,14 @@
 
         </TableRow>
     </TableLayout>
+
+    <Button
+        android:id="@+id/btnSendTimeElapsed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:text="Send Time"
+        android:textSize="20sp"/>
+
 </LinearLayout>
