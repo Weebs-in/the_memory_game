@@ -15,6 +15,16 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/musicBtn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end"
+            android:background="@drawable/play_music"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:clickable="true"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
