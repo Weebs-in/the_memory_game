@@ -48,7 +48,7 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
     private final int maxSelectionCount = 6;
 
     private TextView textViewStatus;
-
+    public static int channel = 0;  // channel=1表示第一个游戏，channel=2表示第二个游戏
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +85,17 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
                     // if already 6 images selected, get a new intent to guess activity
                     if (selectedCount > maxSelectionCount) {
                         makeToastWithMsg("ERROR: Max number of item exceeded");
-                    } else if (selectedCount == maxSelectionCount) {
+                    } else if (selectedCount == maxSelectionCount && channel == 1) {
                         Intent intent = new Intent(FetchActivity.this, GuessActivity.class);
                         intent.putIntegerArrayListExtra("selectedIds", (ArrayList<Integer>) getSelectedImageIds());
                         startActivity(intent);
+                        channel = 0;
+                    } else if (selectedCount == maxSelectionCount && channel == 2) {
+                        Intent intent = new Intent(FetchActivity.this, RememberActivity.class);
+                        intent.putIntegerArrayListExtra("selectedIds", (ArrayList<Integer>) getSelectedImageIds());
+                        intent.putIntegerArrayListExtra("unselectedIds", (ArrayList<Integer>) getUnSelectedImageIds());
+                        startActivity(intent);
+                        channel = 0;
                     }
                 }
             });
@@ -123,6 +130,7 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
 
     /**
      * Get how many images has been cached
+     *
      * @return number of images cached
      */
     public static int getImageCacheCount() {
@@ -150,6 +158,16 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
         return res;
     }
 
+    public List<Integer> getUnSelectedImageIds() {
+        List<Integer> res = new ArrayList<>();
+        for (int k : imageSelected.keySet()) {
+            if (Boolean.FALSE.equals(imageSelected.get(k))) {
+                res.add(k);
+            }
+        }
+        return res;
+    }
+
     /**
      * Make toast easier
      *
@@ -161,6 +179,7 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
 
     /**
      * Validate user's url
+     *
      * @param urlString url
      * @return valid or not
      */
