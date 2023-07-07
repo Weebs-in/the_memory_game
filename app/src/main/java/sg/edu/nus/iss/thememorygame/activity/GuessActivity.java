@@ -137,6 +137,8 @@ public class GuessActivity extends AppCompatActivity {
                         // 如果两张图片相同，则保持翻开状态
                         //将这两张图片设为不能再点击
                         ImageView firstImageView = findViewById(firstImageGuessPlace);
+                        imageView.setAlpha(0.2f);
+                        firstImageView.setAlpha(0.2f);
                         imageView.setEnabled(false);
                         firstImageView.setEnabled(false);
                         numOfGuessRight++;
