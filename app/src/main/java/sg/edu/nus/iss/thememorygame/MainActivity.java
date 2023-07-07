@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -21,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ImageView imageView = findViewById(R.id.imgBrain);
+        if(imageView!=null){
+            imageView.setImageResource(R.drawable.brain);
+        }
 
         Button popupButton = findViewById(R.id.popup_button);
         popupButton.setOnClickListener(new View.OnClickListener() {
