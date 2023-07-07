@@ -47,6 +47,9 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
     private Map<Integer, Boolean> imageSelected;
     private final int maxSelectionCount = 6;
 
+    private TextView textViewStatus;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +100,7 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
         // set progress bar and text
         progressBar = findViewById(R.id.progressBar);
         progressText = findViewById(R.id.progress_text);
+        textViewStatus = findViewById(R.id.textViewStatus);
         // set lru cache
         int maxMemory = (int) Runtime.getRuntime().maxMemory() / 1024;
         int cacheSize = maxMemory / 8;
@@ -303,6 +307,18 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
             // update text progress
             String textProgress = currentProgress != imageMaxCount ? ("Downloading " + currentProgress + " of " + imageMaxCount + " images") : "Download completed";
             progressText.setText(textProgress);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            // Check if all images are loaded
+            if (getImageCacheCount() == imageMaxCount) {
+                makeToastWithMsg("All images loaded successfully");
+            } else {
+                makeToastWithMsg("Failed to load all images");
+            }
+
+            textViewStatus.setVisibility(View.VISIBLE);
         }
     }
 

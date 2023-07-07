@@ -4,4 +4,5 @@
     <string name="fetch_btn_text">Fetch</string>
     <string name="ur_input_hint">Enter URL here</string>
     <string name="download_progress_text_default">Downloading ? of 20 images</string>
+    <string name="image_loading_completed">Image loading completed</string>
 </resources>
