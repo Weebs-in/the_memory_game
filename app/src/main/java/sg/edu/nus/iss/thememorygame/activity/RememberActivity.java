@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.thememorygame.activity;
 
 //Re-select the first selected image from the disordered images
+import static sg.edu.nus.iss.thememorygame.activity.FetchActivity.channel;
 import static sg.edu.nus.iss.thememorygame.activity.FetchActivity.getImageCache;
 
 import androidx.appcompat.app.AlertDialog;
@@ -63,6 +64,7 @@ public class RememberActivity extends AppCompatActivity {
             Log.e(testTag, "You need to access this page via selecting items in the 1st page");
            // makeToastWithMsg("You need to access this page via selecting items in the 1st page");
             Intent intent = new Intent(RememberActivity.this, FetchActivity.class);
+            channel=2;
             startActivity(intent);
         } else {
            /* for (Integer integer : receivedList) {

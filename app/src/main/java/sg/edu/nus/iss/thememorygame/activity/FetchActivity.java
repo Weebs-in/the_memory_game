@@ -47,6 +47,7 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
     private Map<Integer, Boolean> imageSelected;
     private final int maxSelectionCount = 6;
 
+    public static int channel=0;//channel=1表示第一个游戏，channel=2表示第二个游戏
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,11 +83,17 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
                     // if already 6 images selected, get a new intent to guess activity
                     if (selectedCount > maxSelectionCount) {
                         makeToastWithMsg("ERROR: Max number of item exceeded");
-                    } else if (selectedCount == maxSelectionCount) {
+                    } else if (selectedCount == maxSelectionCount&&channel==1) {
                         Intent intent = new Intent(FetchActivity.this, GuessActivity.class);
+                        intent.putIntegerArrayListExtra("selectedIds", (ArrayList<Integer>) getSelectedImageIds());
+                        startActivity(intent);
+                        channel=0;
+                    }else if(selectedCount == maxSelectionCount&&channel==2){
+                        Intent intent = new Intent(FetchActivity.this, RememberActivity.class);
                         intent.putIntegerArrayListExtra("selectedIds", (ArrayList<Integer>) getSelectedImageIds());
                         intent.putIntegerArrayListExtra("unselectedIds", (ArrayList<Integer>) getUnSelectedImageIds());
                         startActivity(intent);
+                        channel=0;
                     }
                 }
             });

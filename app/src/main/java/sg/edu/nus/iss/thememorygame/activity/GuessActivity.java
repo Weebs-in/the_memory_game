@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.thememorygame.activity;
 
+import static sg.edu.nus.iss.thememorygame.activity.FetchActivity.channel;
 import static sg.edu.nus.iss.thememorygame.activity.FetchActivity.getImageCache;
 
 import androidx.appcompat.app.AlertDialog;
@@ -67,6 +68,7 @@ public class GuessActivity extends AppCompatActivity {
         if (receivedList == null) {
             Log.e(testTag, "You need to access this page via selecting items in the 1st page");
            // makeToastWithMsg("You need to access this page via selecting items in the 1st page");
+            channel=1;
             Intent intent = new Intent(GuessActivity.this, FetchActivity.class);
             startActivity(intent);
         } else {
