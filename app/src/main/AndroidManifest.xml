@@ -26,6 +26,9 @@
             android:name=".activity.RememberActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.HistoryActivity"
+            android:exported="false"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

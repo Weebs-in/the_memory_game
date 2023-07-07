@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import sg.edu.nus.iss.thememorygame.activity.GuessActivity;
+import sg.edu.nus.iss.thememorygame.activity.HistoryActivity;
 import sg.edu.nus.iss.thememorygame.activity.RememberActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ImageView imageView = findViewById(R.id.imgBrain);
+        if(imageView!=null){
+            imageView.setImageResource(R.drawable.brain);
+        }
 
         Button popupButton = findViewById(R.id.popup_button);
         popupButton.setOnClickListener(new View.OnClickListener() {
@@ -38,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openRememberActivity(View view) {
         Intent intent = new Intent(this, RememberActivity.class);
+        startActivity(intent);
+    }
+
+    public void openHistoryActivity(View view){
+        Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
