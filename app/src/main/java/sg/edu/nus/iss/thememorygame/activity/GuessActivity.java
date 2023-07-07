@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +49,8 @@ public class GuessActivity extends AppCompatActivity {
     private int mSeconds = 0;
 
     private static int testTime = 0;
+
+    private List<Integer> historyList = new ArrayList<>();
 
     /**
      * Make toast easier
@@ -137,9 +141,9 @@ public class GuessActivity extends AppCompatActivity {
                                     .setPositiveButton("Return",
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dlg, int which) {
-                                                    Intent intent = new Intent(GuessActivity.this, MainActivity.class);
+                                                    Intent intent = new Intent(GuessActivity.this, HistoryActivity.class);
                                                     startActivity(intent);
-                                                    finish();
+//                                                    finish();
                                                 }
                                             });
                             dlg.show();
@@ -216,9 +220,9 @@ public class GuessActivity extends AppCompatActivity {
                                     .setPositiveButton("Return",
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dlg, int which) {
-                                                    Intent intent = new Intent(GuessActivity.this, MainActivity.class);
+                                                    Intent intent = new Intent(GuessActivity.this, HistoryActivity.class);
                                                     startActivity(intent);
-                                                    finish();
+//                                                    finish();
                                                 }
                                             });
                             dlg.show();
@@ -254,11 +258,29 @@ public class GuessActivity extends AppCompatActivity {
 
 
     public void timeRecording() {
-        SharedPreferences pref = getSharedPreferences("time_recording", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        testTime++;
-        editor.putString("Test Time" + testTime, String.valueOf(mSeconds));
-        editor.commit();
+        SharedPreferences pref = getSharedPreferences("time_stamps",MODE_PRIVATE);
+
+        if(pref.contains("time")){
+            String timeStrings = pref.getString("time", "");
+            if(timeStrings != null){
+                List<Integer> integerList = deserialize(timeStrings);
+                integerList.add(mSeconds);
+                historyList.addAll(integerList);
+
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("time",serialize(historyList));
+                editor.commit();
+            }
+        }
+        else {
+            historyList.add(mSeconds);
+
+            String timeStamps = serialize(historyList);
+
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("time",timeStamps);
+            editor.commit();
+        }
     }
 
     public List<Integer> generateRandomNumbers(int min, int max, int count) {
@@ -288,6 +310,31 @@ public class GuessActivity extends AppCompatActivity {
         int remainingSeconds = seconds % 60;
 
         return String.format("%02d:%02d:%02d", hours, minutes, remainingSeconds);
+    }
+
+    public String serialize(List<Integer> historyList) {
+
+        String savedString = "";
+        for (Integer history : historyList) {
+            savedString += history.toString() + ',';
+        }
+        return savedString;
+    }
+
+    public List<Integer> deserialize(String str){
+
+        String[] savedArray = str.split(",");
+        List<String> savedStringList = Arrays.asList(savedArray);
+
+        List<Integer> savedIntegerList = new ArrayList<Integer>();
+
+        for (String ele: savedStringList) {
+            savedIntegerList.add(Integer.parseInt(ele));
+        }
+
+        Collections.sort(savedIntegerList);
+
+        return savedIntegerList;
     }
 
     private void runTimer() {

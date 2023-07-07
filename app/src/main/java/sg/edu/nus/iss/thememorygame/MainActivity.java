@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import sg.edu.nus.iss.thememorygame.activity.GuessActivity;
+import sg.edu.nus.iss.thememorygame.activity.HistoryActivity;
 import sg.edu.nus.iss.thememorygame.activity.RememberActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openRememberActivity(View view) {
         Intent intent = new Intent(this, RememberActivity.class);
+        startActivity(intent);
+    }
+
+    public void openHistoryActivity(View view){
+        Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
