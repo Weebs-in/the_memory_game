@@ -252,6 +252,16 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
      */
     private class FetchImagesTask extends AsyncTask<String, Integer, Void> {
 
+        private Bitmap resizeImage(Bitmap originalBitmap) {
+            int desiredWidth = 100; // Desired width in pixels
+
+            // Calculate the new height while maintaining aspect ratio
+            int height = (int) (originalBitmap.getHeight() / (float) originalBitmap.getWidth() * desiredWidth);
+
+            // Resize the bitmap
+            return Bitmap.createScaledBitmap(originalBitmap, desiredWidth, height, true);
+        }
+
         /**
          * Main task to fetch image
          *
@@ -262,6 +272,10 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
         protected Void doInBackground(String... strings) {
             String targetUrl = strings[0];
             targetUrl = "https://stocksnap.io/";  // TODO: remove this line after testing
+
+            // set maximum image size for images stored in cache
+            int maxImageSize = (imageCache.maxSize() / 1024) / 22;
+
             Log.d(testTag, "Received image url: " + targetUrl);
             Log.i(testTag, "Ready to fetch");
             try {
@@ -282,6 +296,7 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
                         Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
                         // confirm process of image, set into image view
                         if (bitmap != null) {
+                          bitmap = resizeImage(bitmap);
                             imageCache.put("image" + (count + 1), bitmap);
                             // update progress bar while put image into imageview
                             publishProgress(count + 1);
