@@ -36,7 +36,15 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
 
             String timeStamp = pref.getString("time","");
 
-            List<Integer> integerList = deserialize(timeStamp);
+            // Deserializing, sorting and showing the best 10 time taken
+            List<Integer> integerList;
+            if (deserialize(timeStamp).size() > 10) {
+                integerList = deserialize(timeStamp).subList(0, 10);
+            }
+            else {
+                integerList = deserialize(timeStamp);
+            }
+
 
             for (Integer integer : integerList){
                 String formattedTime = formatTime(integer);
