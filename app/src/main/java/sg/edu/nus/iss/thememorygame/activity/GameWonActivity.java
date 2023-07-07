@@ -42,7 +42,8 @@ public class GameWonActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         if(id == R.id.btnPlayAgain){
-
+            Intent intent = new Intent(GameWonActivity.this, FetchActivity.class);
+            startActivity(intent);
         }
     }
 }

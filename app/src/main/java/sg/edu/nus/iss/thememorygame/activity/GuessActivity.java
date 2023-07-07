@@ -63,6 +63,7 @@ public class GuessActivity extends AppCompatActivity implements View.OnClickList
         finish();
     }
 
+    // Button to be replaced by trigger action once the game has won (Codes inside to be used)
     @Override
     public void onClick(View view) {
 
@@ -74,6 +75,8 @@ public class GuessActivity extends AppCompatActivity implements View.OnClickList
             Intent intent = new Intent(GuessActivity.this, GameWonActivity.class);
             intent.putExtra("time_elapsed", formatTime(elapsedSecs));
             startActivity(intent);
+
+            //historyList.add(elapsedSecs);
 
             String timeStamps = serialize(historyList);
 
