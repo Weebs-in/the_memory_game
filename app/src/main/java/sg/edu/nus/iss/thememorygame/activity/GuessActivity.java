@@ -370,8 +370,11 @@ public class GuessActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        for (MediaPlayer mediaPlayer : mediaPlayers) {
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+                }
+            }
     }
-
 
 }
