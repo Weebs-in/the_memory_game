@@ -7,12 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import sg.edu.nus.iss.thememorygame.activity.GuessActivity;
 import sg.edu.nus.iss.thememorygame.activity.RememberActivity;
+import sg.edu.nus.iss.thememorygame.activity.HistoryActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,10 +31,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ImageView imageView = findViewById(R.id.imgBrain);
+        if(imageView!=null){
+            imageView.setImageResource(R.drawable.brain);
+        }
     }
 
     public void openGuessActivity(View view) {
         Intent intent = new Intent(this, GuessActivity.class);
+        startActivity(intent);
+    }
+
+    public void openHistoryActivity(View view){
+        Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 

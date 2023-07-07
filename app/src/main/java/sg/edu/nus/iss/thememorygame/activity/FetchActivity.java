@@ -296,7 +296,7 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
                         Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
                         // confirm process of image, set into image view
                         if (bitmap != null) {
-                          bitmap = resizeImage(bitmap);
+                            bitmap = resizeImage(bitmap);
                             imageCache.put("image" + (count + 1), bitmap);
                             // update progress bar while put image into imageview
                             publishProgress(count + 1);
