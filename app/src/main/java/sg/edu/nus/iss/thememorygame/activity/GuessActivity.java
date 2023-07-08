@@ -261,8 +261,8 @@ public class GuessActivity extends AppCompatActivity {
                                 // 设置第一张图片为 R.drawable.img_clear
                                 firstImageView.setImageResource(R.drawable.img_clear);
                             }
-                        }, 300); // 延迟0.3秒钟执行
-                        // 重置已翻开的图片变量，为下一次翻转做准备
+                        }, 300); // delay by 3 seconds
+                        // reset the variables，prepare for next click
                         FirstPictureTurnOn = false;
                         SecondPictureTurnOn = false;
                         firstImageGuessPlace = -1;
