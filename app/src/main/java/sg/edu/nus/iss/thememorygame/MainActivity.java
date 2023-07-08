@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        //Stop the background music  servie
+        //Stop the background music service
         Intent serviceIntent = new Intent(this, MyBackgroundMusicService.class);
         stopService(serviceIntent);
 

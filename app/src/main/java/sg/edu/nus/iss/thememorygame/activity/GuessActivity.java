@@ -120,22 +120,22 @@ public class GuessActivity extends AppCompatActivity {
             imageView.setOnClickListener(view -> {
                 imageView.setImageBitmap(getImageCache().get("image" + newPlace_imageNum.get(finalI)));
                 if (FirstPictureTurnOn == false) {
-                    // 如果之前没有翻开的图片，则将当前点击的图片设置为第一张图片
+                    // if no picture has been clicked, set this one as the first
                     FirstPictureTurnOn = true;
                     firstImageGuessPlace = imageView.getId();
                     firstImage = "image" + newPlace_imageNum.get(finalI);
                     Log.d("first", firstImage);
                 } else if (SecondPictureTurnOn == false) {
-                    // 如果已经有第一张图片翻开，但是还没有第二张图片翻开，则将当前点击的图片设置为第二张图片
+                    // If one picture has been clicked, but not a second, set the current picture as the second one，
                     SecondPictureTurnOn = true;
                     secondImage = "image" + newPlace_imageNum.get(finalI);
                     Log.d("second", secondImage);
 
-                    // 判断两张图片是否相同
+                    // Check if both selected images are the same
                     if (firstImage.equals(secondImage)) {
                         mediaPlayers[0].start();
-                        // 如果两张图片相同，则保持翻开状态
-                        //将这两张图片设为不能再点击
+                        // if both photos are the same, they remain open
+                        // make successfully matched photos unclickable
                         ImageView firstImageView = findViewById(firstImageGuessPlace);
                         imageView.setAlpha(0.2f);
                         firstImageView.setAlpha(0.2f);
@@ -165,20 +165,20 @@ public class GuessActivity extends AppCompatActivity {
                         SecondPictureTurnOn = false;
                     } else {
                         mediaPlayers[1].start();
-                        // 如果两张图片不同，则执行合上的操作
-                        //第一张图
+                        // if the pictures clicked are different, hide them again
+                        // first picture
                         ImageView firstImageView = findViewById(firstImageGuessPlace);
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                // 设置第二张图片为 R.drawable.img_clear
+                                // set the second picture as R.drawable.img_clear
                                 imageView.setImageResource(R.drawable.img_clear);
-                                // 设置第一张图片为 R.drawable.img_clear
+                                // set the second picture as R.drawable.img_clear
                                 firstImageView.setImageResource(R.drawable.img_clear);
                             }
-                        }, 300); // 延迟0.3秒钟执行
-                        // 重置已翻开的图片变量，为下一次翻转做准备
+                        }, 300); // delay by 3s
+                        // reset the values，in preparation for next match
                         FirstPictureTurnOn = false;
                         SecondPictureTurnOn = false;
                         firstImageGuessPlace = -1;
@@ -203,22 +203,25 @@ public class GuessActivity extends AppCompatActivity {
             imageView.setOnClickListener(view -> {
                 imageView.setImageBitmap(getImageCache().get("image" + newPlace_imageNum.get(finalI)));
                 if (FirstPictureTurnOn == false) {
-                    // 如果之前没有翻开的图片，则将当前点击的图片设置为第一张图片
+                    // if there was no image open, set current image as first one
                     FirstPictureTurnOn = true;
                     firstImageGuessPlace = imageView.getId();
                     firstImage = "image" + newPlace_imageNum.get(finalI);
                     Log.d("first", firstImage);
                 } else if (SecondPictureTurnOn == false) {
-                    // 如果已经有第一张图片翻开，但是还没有第二张图片翻开，则将当前点击的图片设置为第二张图片
+                    // if there is one image open, set current one as second one
                     SecondPictureTurnOn = true;
                     secondImage = "image" + newPlace_imageNum.get(finalI);
                     Log.d("second", secondImage);
 
-                    // 判断两张图片是否相同
+                    // check if both images are the same
                     if (firstImage.equals(secondImage)) {
-                        // 如果两张图片相同，则保持翻开状态
-                        //将这两张图片设为不能再点击
+                        mediaPlayers[0].start();
+                        // if both images are the same, remain open
+                        // ensure both photos cannot be clicked
                         ImageView firstImageView = findViewById(firstImageGuessPlace);
+                        imageView.setAlpha(0.2f);
+                        firstImageView.setAlpha(0.2f);
                         imageView.setEnabled(false);
                         firstImageView.setEnabled(false);
                         numOfGuessRight++;
@@ -245,8 +248,9 @@ public class GuessActivity extends AppCompatActivity {
                         SecondPictureTurnOn = false;
                     } else {
 
-                        // 如果两张图片不同，则执行合上的操作
+                        // if both images are different, hide them
                         //第一张图
+                        mediaPlayers[1].start();
                         ImageView firstImageView = findViewById(firstImageGuessPlace);
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
