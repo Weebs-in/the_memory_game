@@ -2,12 +2,14 @@ package sg.edu.nus.iss.thememorygame;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -96,10 +98,42 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle(getResources().getString(R.string.popup_title));
 
         ScrollView scrollView = new ScrollView(MainActivity.this);
-        TextView textView = new TextView(MainActivity.this);
-        textView.setText(getResources().getString(R.string.long_text));
-        textView.setLineSpacing(0, 2f);
-        scrollView.addView(textView);
+        LinearLayout layout = new LinearLayout(MainActivity.this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        // Add Instructions content
+        // Add title "Guess Images"
+        TextView titleGuess = new TextView(MainActivity.this);
+        titleGuess.setText(getResources().getString(R.string.guess_images));
+        titleGuess.setLineSpacing(0, 2f);
+        titleGuess.setPadding(60, 50, 60, 20);
+        titleGuess.setTypeface(null, Typeface.BOLD);
+        layout.addView(titleGuess);
+
+        // Add Guess Images content
+        TextView contentGuess = new TextView(MainActivity.this);
+        contentGuess.setText(getResources().getString(R.string.guess_content));
+        contentGuess.setLineSpacing(0, 2f);
+        contentGuess.setPadding(60, 20, 60, 20);
+        layout.addView(contentGuess);
+
+        // Add Bonus Game title
+        TextView titleBonus = new TextView(MainActivity.this);
+        titleBonus.setText(getResources().getString(R.string.bonus_game));
+        titleBonus.setLineSpacing(0, 2f);
+        titleBonus.setPadding(60, 20, 60, 20);
+        titleBonus.setTypeface(null, Typeface.BOLD);
+        layout.addView(titleBonus);
+
+        // Add Bonus Game content
+        TextView contentBonus = new TextView(MainActivity.this);
+        contentBonus.setText(getResources().getString(R.string.bonus_content));
+        contentBonus.setLineSpacing(0, 2f);
+        contentBonus.setPadding(60, 20, 60, 20);
+        layout.addView(contentBonus);
+
+        // add layout into scrollView
+        scrollView.addView(layout);
 
         builder.setView(scrollView);
 
