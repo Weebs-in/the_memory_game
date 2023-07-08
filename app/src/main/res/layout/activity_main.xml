@@ -31,6 +31,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:fontFamily="@font/cirkus"
+            android:textStyle="bold"
             android:text="Welcome to the Memory Game"
             android:textSize="35sp"
             android:gravity="center"/>
