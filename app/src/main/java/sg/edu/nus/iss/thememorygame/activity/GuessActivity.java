@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -52,6 +53,8 @@ public class GuessActivity extends AppCompatActivity {
 
     private List<Integer> historyList = new ArrayList<>();
 
+    private MediaPlayer[] mediaPlayers;
+
     /**
      * Make toast easier
      *
@@ -65,6 +68,12 @@ public class GuessActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guess);
+
+        mediaPlayers = new MediaPlayer[3];
+        mediaPlayers[0] = MediaPlayer.create(getApplicationContext(), R.raw.correct_sound);
+        mediaPlayers[1] = MediaPlayer.create(getApplicationContext(), R.raw.wrong_sound);
+        mediaPlayers[2] = MediaPlayer.create(getApplicationContext(), R.raw.win_sound);
+
         List<Integer> receivedList = getIntent().getIntegerArrayListExtra("selectedIds");
 
         if (receivedList == null) {
@@ -124,9 +133,12 @@ public class GuessActivity extends AppCompatActivity {
 
                     // 判断两张图片是否相同
                     if (firstImage.equals(secondImage)) {
+                        mediaPlayers[0].start();
                         // 如果两张图片相同，则保持翻开状态
                         //将这两张图片设为不能再点击
                         ImageView firstImageView = findViewById(firstImageGuessPlace);
+                        imageView.setAlpha(0.2f);
+                        firstImageView.setAlpha(0.2f);
                         imageView.setEnabled(false);
                         firstImageView.setEnabled(false);
                         numOfGuessRight++;
@@ -134,6 +146,7 @@ public class GuessActivity extends AppCompatActivity {
                         textView.setText(numOfGuessRight + " of 6 matches");
                         if (numOfGuessRight == 6) {
                             guessSuccessful = true;
+                            mediaPlayers[2].start();
                             timeRecording();
                             AlertDialog.Builder dlg = new AlertDialog.Builder(GuessActivity.this)
                                     .setTitle("Congratulations")
@@ -151,7 +164,7 @@ public class GuessActivity extends AppCompatActivity {
                         FirstPictureTurnOn = false;
                         SecondPictureTurnOn = false;
                     } else {
-
+                        mediaPlayers[1].start();
                         // 如果两张图片不同，则执行合上的操作
                         //第一张图
                         ImageView firstImageView = findViewById(firstImageGuessPlace);
@@ -213,6 +226,7 @@ public class GuessActivity extends AppCompatActivity {
                         textView.setText(numOfGuessRight + " of 6 matches");
                         if (numOfGuessRight == 6) {
                             guessSuccessful = true;
+                            mediaPlayers[2].start();
                             timeRecording();
                             AlertDialog.Builder dlg = new AlertDialog.Builder(GuessActivity.this)
                                     .setTitle("Congratulations")
@@ -358,8 +372,11 @@ public class GuessActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        for (MediaPlayer mediaPlayer : mediaPlayers) {
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+                }
+            }
     }
-
 
 }
