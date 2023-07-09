@@ -271,7 +271,6 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
         @Override
         protected Void doInBackground(String... strings) {
             String targetUrl = strings[0];
-            targetUrl = "https://stocksnap.io/";  // TODO: remove this line after testing
 
             Log.d(testTag, "Received image url: " + targetUrl);
             Log.i(testTag, "Ready to fetch");
