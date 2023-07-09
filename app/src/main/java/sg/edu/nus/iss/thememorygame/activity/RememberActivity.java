@@ -17,6 +17,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.media.MediaPlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +40,7 @@ public class RememberActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private Map<Integer, Boolean> imageSelected;
     private final int maxSelectionCount = 6;
+    private MediaPlayer[] mediaPlayers;
 
     /**
      * Make toast easier
@@ -53,6 +55,8 @@ public class RememberActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guess);
+        mediaPlayers = new MediaPlayer[1];
+        mediaPlayers[0] = MediaPlayer.create(getApplicationContext(), R.raw.win_sound);
         List<Integer> receivedList = getIntent().getIntegerArrayListExtra("selectedIds");
         List<Integer> unreceivedList = getIntent().getIntegerArrayListExtra("unselectedIds");
 
@@ -139,6 +143,7 @@ public class RememberActivity extends AppCompatActivity {
                         Log.d(testTag, "selecting image" + newPlace_imageNum.get(finalI));
                         if (numOfGuessRight == 6) {
                             guessSuccessful = true;
+                            mediaPlayers[0].start();
                             String title = getString(R.string.alert_right);
                             AlertDialog.Builder dlg = new AlertDialog.Builder(RememberActivity.this)
                                     .setTitle(title)
