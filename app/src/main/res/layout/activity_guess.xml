@@ -47,7 +47,7 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <ImageView
+            <sg.edu.nus.iss.thememorygame.SquareImageView
                 android:id="@+id/image_guess_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -55,7 +55,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_clear" />
 
-            <ImageView
+            <sg.edu.nus.iss.thememorygame.SquareImageView
                 android:id="@+id/image_guess_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -63,7 +63,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_clear" />
 
-            <ImageView
+            <sg.edu.nus.iss.thememorygame.SquareImageView
                 android:id="@+id/image_guess_3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -78,7 +78,7 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <ImageView
+            <sg.edu.nus.iss.thememorygame.SquareImageView
                 android:id="@+id/image_guess_4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -86,7 +86,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_clear" />
 
-            <ImageView
+            <sg.edu.nus.iss.thememorygame.SquareImageView
                 android:id="@+id/image_guess_5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -94,7 +94,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_clear" />
 
-            <ImageView
+            <sg.edu.nus.iss.thememorygame.SquareImageView
                 android:id="@+id/image_guess_6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -109,7 +109,7 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <ImageView
+            <sg.edu.nus.iss.thememorygame.SquareImageView
                 android:id="@+id/image_guess_7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -117,7 +117,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_clear" />
 
-            <ImageView
+            <sg.edu.nus.iss.thememorygame.SquareImageView
                 android:id="@+id/image_guess_8"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -125,7 +125,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_clear" />
 
-            <ImageView
+            <sg.edu.nus.iss.thememorygame.SquareImageView
                 android:id="@+id/image_guess_9"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -140,7 +140,7 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <ImageView
+            <sg.edu.nus.iss.thememorygame.SquareImageView
                 android:id="@+id/image_guess_10"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -148,7 +148,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_clear" />
 
-            <ImageView
+            <sg.edu.nus.iss.thememorygame.SquareImageView
                 android:id="@+id/image_guess_11"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -156,7 +156,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_clear" />
 
-            <ImageView
+            <sg.edu.nus.iss.thememorygame.SquareImageView
                 android:id="@+id/image_guess_12"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

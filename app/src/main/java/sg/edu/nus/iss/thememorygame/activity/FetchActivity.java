@@ -273,9 +273,6 @@ public class FetchActivity extends AppCompatActivity implements View.OnClickList
             String targetUrl = strings[0];
             targetUrl = "https://stocksnap.io/";  // TODO: remove this line after testing
 
-            // set maximum image size for images stored in cache
-            int maxImageSize = (imageCache.maxSize() / 1024) / 22;
-
             Log.d(testTag, "Received image url: " + targetUrl);
             Log.i(testTag, "Ready to fetch");
             try {
